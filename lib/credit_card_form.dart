@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
 
 import 'credit_card_model.dart';
@@ -182,8 +183,8 @@ class _CreditCardFormState extends State<CreditCardForm> {
                 padding: const EdgeInsets.symmetric(vertical: 8.0),
                 margin: const EdgeInsets.only(left: 16, top: 16, right: 16),
                 child: TextFormField(
-                  obscureText: widget.obscureNumber,
                   controller: _cardNumberController,
+                  obscureText: widget.obscureNumber,
                   cursorColor: widget.cursorColor ?? themeColor,
                   onEditingComplete: () {
                     FocusScope.of(context).requestFocus(expiryDateNode);
@@ -194,7 +195,10 @@ class _CreditCardFormState extends State<CreditCardForm> {
                   decoration: widget.cardNumberDecoration,
                   keyboardType: TextInputType.number,
                   textInputAction: TextInputAction.next,
-                  autofillHints: const <String>[AutofillHints.creditCardNumber],
+                  //autofillHints: const <String>[AutofillHints.creditCardNumber],
+                  inputFormatters: <TextInputFormatter>[
+                    FilteringTextInputFormatter.digitsOnly,
+                  ],
                   validator: (String? value) {
                     // Validate less that 13 digits +3 white spaces
                     if (value!.isEmpty || value.length < 16) {
