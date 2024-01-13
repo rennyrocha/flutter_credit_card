@@ -117,9 +117,19 @@ class _CreditCardFormState extends State<CreditCardForm> {
     _cardNumberController.addListener(() {
       setState(() {
         cardNumber = _cardNumberController.text;
+        if (cardNumber.length == 2 && cardNumber == "37") {
+          cardNumberMaxLength = 17;
+          _cardNumberController.mask = '0000 0000000 0000';
+        } else if (_cardNumberController.text.length == 2 &&
+            _cardNumberController.text != "37") {
+          cardNumberMaxLength = 19;
+          _cardNumberController.mask = '0000 0000 0000 0000';
+        }
+        _cardNumberController.text = cardNumber;
         creditCardModel.cardNumber = cardNumber;
         onCreditCardModelChange(creditCardModel);
       });
+      print(cardNumber);
     });
 
     _expiryDateController.addListener(() {
@@ -204,24 +214,6 @@ class _CreditCardFormState extends State<CreditCardForm> {
                       return widget.numberValidationMessage;
                     }
                     return null;
-                  },
-                  onChanged: (String v) {
-                    if (v.length == 2 && v == "37") {
-                      setState(() {
-                        cardNumberMaxLength = 17;
-                        _cardNumberController =
-                            MaskedTextController(mask: '0000 0000000 0000');
-                      });
-                    } else if (v.length == 2 && v != "37") {
-                      setState(() {
-                        cardNumberMaxLength = 19;
-                        _cardNumberController =
-                            MaskedTextController(mask: '0000 0000 0000 0000');
-                      });
-                    }
-                    setState(() {
-                      _cardNumberController.text = v;
-                    });
                   },
                 ),
               ),
