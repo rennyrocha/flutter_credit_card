@@ -206,15 +206,15 @@ class _CreditCardFormState extends State<CreditCardForm> {
                     }
                     return null;
                   },
-                  onChanged: (v) {
+                  onChanged: (String v) {
                     if (v.length == 2 && v == "37") {
                       setState(() {
-                        cardNumberMaxLength = 15;
+                        cardNumberMaxLength = 17;
                         _cardNumberController =
                             MaskedTextController(mask: '0000 0000000 0000');
                         _cardNumberController.text = v;
                       });
-                    } else if (v.length == 2 && v != "37") {
+                    } else if (v.length == 2 && v != "19") {
                       setState(() {
                         cardNumberMaxLength = 16;
                         _cardNumberController =
