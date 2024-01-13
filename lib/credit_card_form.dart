@@ -100,7 +100,6 @@ class _CreditCardFormState extends State<CreditCardForm> {
     expiryDate = widget.expiryDate;
     cardHolderName = widget.cardHolderName;
     cvvCode = widget.cvvCode;
-
     creditCardModel = CreditCardModel(
         cardNumber, expiryDate, cardHolderName, cvvCode, isCvvFocused);
   }
