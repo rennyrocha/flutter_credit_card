@@ -1,10 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_credit_card/flutter_credit_card.dart';
-
-import 'credit_card_model.dart';
-import 'flutter_credit_card.dart';
 
 class CreditCardForm extends StatefulWidget {
   const CreditCardForm({
@@ -81,7 +77,7 @@ class _CreditCardFormState extends State<CreditCardForm> {
   late void Function(CreditCardModel) onCreditCardModelChange;
   late CreditCardModel creditCardModel;
 
-  final MaskedTextController _cardNumberController =
+  MaskedTextController _cardNumberController =
       MaskedTextController(mask: '0000 0000 0000 0000');
   final TextEditingController _expiryDateController =
       MaskedTextController(mask: '00/00');
@@ -152,6 +148,9 @@ class _CreditCardFormState extends State<CreditCardForm> {
     });
   }
 
+  int cardNumberMaxLength = 16;
+  //MaskInputTextFormatter ccMask = MaskInputTextFormatter(mask: '0000 0000 0000 0000');
+
   @override
   void dispose() {
     cardHolderNode.dispose();
@@ -201,10 +200,28 @@ class _CreditCardFormState extends State<CreditCardForm> {
                   ],
                   validator: (String? value) {
                     // Validate less that 13 digits +3 white spaces
-                    if (value!.isEmpty || value.length < 16) {
+                    if (value!.isEmpty ||
+                        (value.length < cardNumberMaxLength)) {
                       return widget.numberValidationMessage;
                     }
                     return null;
+                  },
+                  onChanged: (v) {
+                    if (v.length == 2 && v == "37") {
+                      setState(() {
+                        cardNumberMaxLength = 15;
+                        _cardNumberController =
+                            MaskedTextController(mask: '0000 0000000 0000');
+                        _cardNumberController.text = v;
+                      });
+                    } else if (v.length == 2 && v != "37") {
+                      setState(() {
+                        cardNumberMaxLength = 16;
+                        _cardNumberController =
+                            MaskedTextController(mask: '0000 0000 0000 0000');
+                        _cardNumberController.text = v;
+                      });
+                    }
                   },
                 ),
               ),
