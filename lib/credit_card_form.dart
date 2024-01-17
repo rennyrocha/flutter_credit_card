@@ -119,7 +119,7 @@ class _CreditCardFormState extends State<CreditCardForm> {
         cardNumber = _cardNumberController.text;
         if (cardNumber.length == 2 && cardNumber == "37") {
           cardNumberMaxLength = 17;
-          _cardNumberController.mask = '0000 0000000 0000';
+          _cardNumberController.mask = '0000 000000 00000';
         } else if (_cardNumberController.text.length == 2 &&
             _cardNumberController.text != "37") {
           cardNumberMaxLength = 19;
